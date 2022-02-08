@@ -1,6 +1,12 @@
 name: Release JavaScript Package
 
-on: workflow_call
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+      GITHUB_TOKEN:
+        required: true
 
 jobs:
   release:
