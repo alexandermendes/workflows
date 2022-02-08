@@ -1,0 +1,19 @@
+name: Release JavaScript Package
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: yarn run build
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.NEXT_MICRO_SEMANTIC_RELEASE_GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn run semantic-release
