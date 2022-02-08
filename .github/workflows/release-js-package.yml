@@ -3,9 +3,9 @@ name: Release JavaScript Package
 on:
   workflow_call:
     secrets:
-      NPM_TOKEN:
+      npmToken:
         required: true
-      GH_TOKEN:
+      gitHubToken:
         required: true
 
 jobs:
@@ -16,6 +16,6 @@ jobs:
         run: yarn run build
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.gitHubToken }}
+          NPM_TOKEN: ${{ secrets.npmToken }}
         run: yarn run semantic-release
