@@ -3,19 +3,23 @@ name: Release JavaScript Package
 on:
   workflow_call:
     secrets:
-      npmToken:
+      SEMANTIC_RELEASE_GITHUB_TOKEN:
         required: true
-      gitHubToken:
+      NPM_TOKEN:
         required: true
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Build
-        run: yarn run build
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Install
+        run: yarn install --frozen-lockfile --non-interactive
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.gitHubToken }}
-          NPM_TOKEN: ${{ secrets.npmToken }}
+          SEMANTIC_RELEASE_GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn run semantic-release
